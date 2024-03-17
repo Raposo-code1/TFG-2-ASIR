@@ -1,10 +1,9 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ChatScreen, CreateChatScreen } from "../../screens/Chats";
 import { screens } from "../../Utils";
 import { Styles } from "../Styles.styles";
-import { Stack } from "native-base";
 
-const stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export function ChatsNavigation() {
   return (
@@ -13,12 +12,12 @@ export function ChatsNavigation() {
     }}
     >
         <Stack.Screen
-            name={screen.tab.chats.chatScreen}
+            name={screens.tab.chats.chatScreen}
             component={ChatScreen}
             options={{ title: "Chats"}}
         />
         <Stack.Screen
-            name={screen.tab.chats.CreateChatScreen}
+            name={screens.tab.chats.createChatScreen}
             component={CreateChatScreen}
             options={{
                 title: "Nuevo chat",

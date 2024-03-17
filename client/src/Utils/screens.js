@@ -29,7 +29,7 @@ const groups = {
 
 const settings = {
     root: "SettingsRoot",
-    settingScreen: "SettingsScreen",
+    settingsScreen: "SettingsScreen",
     changeFirstnameScreen: "ChangeFirstnameScreen",
     changeLastnameScreen: "ChangeLastnameScreen",
 };

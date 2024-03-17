@@ -11,9 +11,9 @@ const Stack = createNativeStackNavigator();
 
 export function SettingsNavigation() {
   return (
-    <Stack.Navigator screenOptions={{ ...Styles.StackNavigationStyles }}>
+    <Stack.Navigator screenOptions={{ ...Styles.stackNavigationStyles }}>
         <Stack.Screen
-            name={screens.tab.settings.settingScreen}
+            name={screens.tab.settings.settingsScreen}
             component={SettingsScreen}
             options={{ headerShown: false}}
         />
