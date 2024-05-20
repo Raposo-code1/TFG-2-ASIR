@@ -2,17 +2,26 @@ import { View } from "react-native";
 import { Input, Button } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import { useFormik } from "formik";
+import {Auth} from "../../../api";
 import { initialValues, validationSchema } from "./RegisterForm.form";
 import { styles } from "./RegisterForm.styles";
 
-export function RegisterForm() {
+const authController = new Auth();
 
+export function RegisterForm() {
+        const navigation = useNavigation();
     const formik = useFormik({
         initialValues: initialValues(),
         validationSchema: validationSchema(),
         validateOnChange: false,
         onSubmit: async (formValue) => {
-            console.log(formValue);
+            try {
+                await authController.register(formValue.email, formValue.password);
+                navigation.goBack();
+
+            } catch (error) {
+                console.error(error);
+            }
         }
     })
   return (
@@ -21,7 +30,7 @@ export function RegisterForm() {
         <Input
             placeholder="Correo electronico"
             variant="unstyled"
-            autoCapitalze={false}
+            autoCapitalize={false}
             value={formik.values.email}
             onChangeText={(text) => formik.setFieldValue("email", text)}
             style={[styles.input, formik.errors.email && styles.inputError]}

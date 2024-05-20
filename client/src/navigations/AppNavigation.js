@@ -11,8 +11,10 @@ import {
   GroupProfileScreen,
   AddUserGroupScreen,
   ChangeNameGroupScreen} from "../screens/Groups";
-import { screens } from "../Utils";
+import { screens, initSockets } from "../Utils";
 import { Styles } from "./Styles.styles";
+
+initSockets();
 
 const Stack = createNativeStackNavigator();
 

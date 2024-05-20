@@ -21,7 +21,7 @@ export function ChatsNavigation() {
             component={CreateChatScreen}
             options={{
                 title: "Nuevo chat",
-                presentation: "model",
+                presentation: "modal",
                 ...Styles.modalStyles,
                 
             }}
