@@ -1,9 +1,10 @@
 import {   useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { IconButton, CloseIcon } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import { User } from "../../api/user";
 import { useAuth} from "../../hooks/useAuth";
+import { CreateChat } from "../../components/Chat";
 
 const userController = new User();
 
@@ -28,7 +29,7 @@ export function CreateChatScreen() {
     (async () => {
       try {
         const response = await userController.getAll(accessToken);
-        setUser(response);
+        setUsers(response);
         setUsersResult(response);
       } catch (error) {
         console.error(error);
@@ -39,7 +40,7 @@ export function CreateChatScreen() {
   
   return (
     <View>
-      <Text>CreateChatScreen</Text>
+      <CreateChat.ListUser users={usersResult} />
     </View>
   )
 }
