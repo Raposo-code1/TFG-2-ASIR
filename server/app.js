@@ -5,7 +5,7 @@ import cors from "cors";
 import http from "http";
 import morgan from "morgan";
 import { initSocketServer } from "./utils/index.js";
-import { authRoutes, userRoutes } from "./routes/index.js";
+import { authRoutes, userRoutes, chatRoutes, ChatMessageRoutes } from "./routes/index.js";
 
 
 
@@ -30,5 +30,7 @@ app.use(morgan("dev"));
 //Configure Routing
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
+app.use("/api", chatRoutes);
+app.use("/api", ChatMessageRoutes);
 
 export { server };

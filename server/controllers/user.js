@@ -29,6 +29,7 @@ async function getUsers(req, res){
             res.status(200).send(users);
         }
     } catch(error) {
+        console.log(error);
         res.status(500).send("Error del servidor");
     }
 }
@@ -39,7 +40,7 @@ async function getUser(req, res){
         const response = await User.findById(id).select("-password");
 
         if (!response){
-            res.status(400).send("No se ha encoontrado el usuario");
+            res.status(400).send("No se ha encontrado el usuario");
         } else {
             res.status(200).send(response);
         }

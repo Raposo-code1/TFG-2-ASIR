@@ -4,7 +4,7 @@ import { IconButton, CloseIcon } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import { User } from "../../api/user";
 import { useAuth} from "../../hooks/useAuth";
-import { CreateChat } from "../../components/Chat";
+import { CreateChat, Search} from "../../components/Chat";
 
 const userController = new User();
 
@@ -37,9 +37,11 @@ export function CreateChatScreen() {
     })()
   }, [])
   
+  if(!usersResult) return null;
   
   return (
     <View>
+      <Search data={users} setData={setUsersResult} />
       <CreateChat.ListUser users={usersResult} />
     </View>
   )

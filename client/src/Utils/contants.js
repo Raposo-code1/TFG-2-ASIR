@@ -1,4 +1,4 @@
-const SERVER_IP = "192.168.1.45:3977"
+const SERVER_IP = "192.168.1.36:3977"
 
 export const ENV = {
     SERVER_IP: SERVER_IP,
@@ -12,7 +12,8 @@ export const ENV = {
             REFRESH_ACCESS_TOKEN: "auth/refresh_access_token",
         },
         ME: "user/me",
-        USER: "user"
+        USER: "user",
+        CHAT: "chat",
     },
     JWT: {
         ACCESS: "access",

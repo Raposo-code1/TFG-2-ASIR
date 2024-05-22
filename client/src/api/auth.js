@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ENV } from "../Utils";
 
+
 export class Auth {
     async register(email, password) {
         try {

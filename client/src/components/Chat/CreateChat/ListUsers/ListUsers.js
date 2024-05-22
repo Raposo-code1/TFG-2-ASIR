@@ -2,15 +2,30 @@ import { ScrollView, View, Text, Touchable, TouchableOpacity } from 'react-nativ
 import { Avatar } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import { map } from "lodash";
+import { Chat } from "../../../../api";
+import { useAuth } from "../../../../hooks";
 import { ENV } from "../../../../Utils";
 import { styles } from "./ListUsers.styles";
 
+
+const chatController = new Chat();
+
 export function ListUser(props) {
   const { users } = props;
+  const auth = useAuth();
+  const navigation = useNavigation();
 
-  const createChat = (user) => {
-    console.log("Crear chat con", user.email)
-  }
+  const createChat = async (user) => {
+    try {
+      await chatController.create(auth.accessToken, auth.user._id, user._id);
+      navigation.goBack();
+    } catch (error) {
+      if(res.status == 200){
+        alert("El chat que has intentado crear ya existe");
+      }
+    }
+  };
+  
 
   return (
     <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
