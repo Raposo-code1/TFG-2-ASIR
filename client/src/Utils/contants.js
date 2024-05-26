@@ -1,4 +1,4 @@
-const SERVER_IP = "192.168.1.36:3977"
+const SERVER_IP = "192.168.1.51:3977"
 
 export const ENV = {
     SERVER_IP: SERVER_IP,
@@ -13,10 +13,13 @@ export const ENV = {
         },
         ME: "user/me",
         USER: "user",
-        CHAT: "chat",
+        CHAT: "/chat",
+        CHAT_MESSAGE_LAST: "/chat/message/last",
+        CHAT_MESSAGE_TOTAL: "/chat/message/total",
     },
     JWT: {
         ACCESS: "access",
         REFRESH: "refresh",
     },
+    ACTIVE_CHAT_ID: "active_chat_id",
 };

@@ -17,7 +17,7 @@ const global = {
 
 const chats = {
     root: "ChatsRoot",
-    chatScreen: "ChatScreen",
+    chatsScreen: "ChatsScreen",
     createChatScreen: "CreateChatScreen",
 };
 

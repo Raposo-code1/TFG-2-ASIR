@@ -1,20 +1,24 @@
 import { useState, useEffect, useCallback } from 'react';
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { IconButton, AddIcon } from "native-base";
+import { size } from "lodash"
 import { Chat } from "../../api";
 import { useAuth } from "../../hooks";
 import { screens } from "../../Utils";
 import { LoadingScreen } from "../../components/Shared";
+import { ListChat, Search } from "../../components/Chat";
 
 const chatController = new Chat();
 
-export function ChatScreen() {
+export function ChatsScreen() {
   const { accessToken } = useAuth();
   const navigation = useNavigation();
   const [chats, setChats] = useState(null);
   const [chatsResult, setChatsResult] = useState(null);
-  
+  const [reload, setReload] = useState(false);
+
+  const onReload = () => setReload((prevState) => !prevState);
 
   useEffect(() => {
     navigation.setOptions({
@@ -28,15 +32,21 @@ export function ChatScreen() {
       />  
       ),
     });
-  }, []);
+  }, [reload]);
 
   useFocusEffect(
     useCallback(() => {
       (async () => {
         try {
           const response = await chatController.getAll(accessToken);
-          setChats(response);
-          setChatsResult(response);
+          const result = response.sort((a, b) => {
+              return (
+                new Date(b.last_message_date) - new Date(a.last_message_date)
+              );
+          });
+
+          setChats(result);
+          setChatsResult(result);
         } catch (error) {
           console.error(error);
         }
@@ -44,12 +54,27 @@ export function ChatScreen() {
     }, [])
   );
 
+  const upTopChat = (chatId) => {
+    const data = chatResult;
+    const formIndex = data.map((chat) => chat._id).indexOf(chatId);
+    const toIndex = 0;
+
+    const element = data.splice(formIndex, 1)[0];
+    
+    data.splice(toIndex, 0, element);
+    setChats([...data]);
+  }
+
   if(!chatsResult) return <LoadingScreen />;
   
   
   return (
     <View>
-      <Text>ChatsScreen</Text>
+      {size(chats) > 0 && <Search data={chats} setData={setChatsResult} />}
+      <ListChat chats={size(chats) === size(chatsResult) ? chats : chatsResult}
+      onReload={onReload}
+      upTopChat={upTopChat}
+      />
     </View>
   )
 }
