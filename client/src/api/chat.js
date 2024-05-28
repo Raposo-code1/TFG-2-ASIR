@@ -1,6 +1,4 @@
-
 import { ENV } from '../Utils';
-
 
 export class Chat {
     async create(token, participantIdOne, participantIdTwo) {
@@ -18,13 +16,22 @@ export class Chat {
                 }),
             };
             const response = await fetch(url, params);
-            const result = await response.json();
+            const contentType = response.headers.get("content-type");
 
-            if(response.status !== 200 && response.status !== 201){
-                throw result;
+            let result;
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                result = await response.json();
+            } else {
+                result = await response.text();
             }
+
+            if (response.status !== 200 && response.status !== 201) {
+                throw new Error(result.message || result || "Error desconocido");
+            }
+
             return result;
         } catch (error) {
+            console.error("Error en create:", error);
             throw error;
         }
     }
@@ -39,12 +46,22 @@ export class Chat {
             };
 
             const response = await fetch(url, params);
-            const result = await response.json();
+            const contentType = response.headers.get("content-type");
 
-            if(response.status !== 200) throw error;
+            let result;
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                result = await response.json();
+            } else {
+                result = await response.text();
+            }
+
+            if (response.status !== 200) {
+                throw new Error(result.message || result || "Error desconocido");
+            }
 
             return result;
         } catch (error) {
+            console.error("Error en getAll:", error);
             throw error;
         }
     }
@@ -59,15 +76,43 @@ export class Chat {
                 },
             };
             const response = await fetch(url, params);
-            const result = await response.json();
-    
-            if (response.status !== 200) {
-                throw error; 
+            const contentType = response.headers.get("content-type");
+
+            let result;
+            if (contentType && contentType.indexOf("application/json") !== -1) {
+                result = await response.json();
+            } else {
+                result = await response.text();
             }
-    
+
+            if (response.status !== 200) {
+                throw new Error(result.message || result || "Error desconocido");
+            }
+
             return result;
         } catch (error) {
-            throw error; // Lanzar el error recibido desde fetch
+            console.error("Error en remove:", error);
+            throw error;
+        }
+    }
+
+    async obtain(token, chatId) {
+        try {
+            const url = `${ENV.API_URL}/${ENV.ENDPOINTS.CHAT}/${chatId}`;
+            const params = {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+
+            const response = await fetch(url, params);
+            const result = await response.json();
+
+            if (response.status !== 200) throw result;
+            
+            return result;
+        } catch (error) {
+            throw error;
         }
     }
 }
